@@ -1,0 +1,157 @@
+﻿@model BlogPost
+@{
+    ViewData["Title"] = "Create Blog Post - Admin";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-plus"></i> Create New Blog Post</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <form method="post" asp-action="CreateBlog" id="blog-form">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label asp-for="Title" class="form-label">Title *</label>
+                                <input asp-for="Title" class="form-control form-control-lg" placeholder="Enter an engaging title..." required>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Category" class="form-label">Category</label>
+                                <select asp-for="Category" class="form-select">
+                                    <option value="">Select Category</option>
+                                    <option value="Success Stories">Success Stories</option>
+                                    <option value="Business Tips">Business Tips</option>
+                                    <option value="Product Reviews">Product Reviews</option>
+                                    <option value="Training">Training</option>
+                                    <option value="Motivation">Motivation</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Summary" class="form-label">Summary</label>
+                            <textarea asp-for="Summary" class="form-control" rows="3" placeholder="Brief summary for the blog post..."></textarea>
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                            <div class="form-text">This will be shown in the blog listing page.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FeaturedImageUrl" class="form-label">Featured Image URL</label>
+                            <input asp-for="FeaturedImageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+                            <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
+                            <div class="form-text">Optional: URL of the featured image for your blog post.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label">Content *</label>
+                            <textarea asp-for="Content" class="form-control" rows="15" placeholder="Write your blog content here. You can use HTML tags for formatting." required></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                            <div class="form-text">
+                                <strong>HTML Formatting Tips:</strong>
+                                <br>• Headings: &lt;h2&gt;Your Heading&lt;/h2&gt;
+                                <br>• Bold: &lt;strong&gt;Bold Text&lt;/strong&gt;
+                                <br>• Lists: &lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;/ul&gt;
+                                <br>• Links: &lt;a href="url"&gt;Link Text&lt;/a&gt;
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Tags" class="form-label">Tags</label>
+                                <input asp-for="Tags" class="form-control" placeholder="modicare, success, business, tips">
+                                <div class="form-text">Comma-separated tags for better searchability.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Status</label>
+                                <div class="form-check">
+                                    <input asp-for="IsPublished" class="form-check-input" type="checkbox" checked>
+                                    <label asp-for="IsPublished" class="form-check-label">
+                                        Publish immediately
+                                    </label>
+                                </div>
+                                <div class="form-text">Uncheck to save as draft.</div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Blog", "Admin")" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Blog List
+                            </a>
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
+                                    <i class="fas fa-save"></i> Create Post
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('blog-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            form.addEventListener('submit', function(e) {
+                // Get form values
+                const title = document.getElementById('Title').value.trim();
+                const content = document.getElementById('Content').value.trim();
+
+                // Simple client-side validation
+                if (!title) {
+                    e.preventDefault();
+                    alert('Please enter a title for your blog post.');
+                    document.getElementById('Title').focus();
+                    return false;
+                }
+
+                if (!content) {
+                    e.preventDefault();
+                    alert('Please enter content for your blog post.');
+                    document.getElementById('Content').focus();
+                    return false;
+                }
+
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+                submitBtn.disabled = true;
+
+                // Let the form submit normally
+                return true;
+            });
+        });
+    </script>
+}

@@ -1,0 +1,127 @@
+﻿@model BlogPost
+@{
+    ViewData["Title"] = Model.Title + " - Vaishali Shah Blog";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Blog Post -->
+            <article>
+                <!-- Featured Image -->
+                @if (!string.IsNullOrEmpty(Model.FeaturedImageUrl))
+                {
+                    <img src="@Model.FeaturedImageUrl" class="img-fluid mb-4 rounded" alt="@Model.Title">
+                }
+
+                <!-- Post Header -->
+                <div class="mb-4">
+                    <h1 class="display-5 fw-bold">@Model.Title</h1>
+                    <div class="d-flex justify-content-between align-items-center text-muted">
+                        <div>
+                            <i class="fas fa-calendar"></i> @Model.CreatedDate.ToString("MMMM dd, yyyy")
+                            <i class="fas fa-user ms-3"></i> @Model.AuthorName
+                            @if (!string.IsNullOrEmpty(Model.Category))
+                            {
+                                <span class="badge bg-primary ms-3">@Model.Category</span>
+                            }
+                        </div>
+                        <div>
+                            <i class="fas fa-eye"></i> @Model.ViewCount views
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <!-- Post Content -->
+                <div class="blog-content">
+                    @Html.Raw(Model.Content)
+                </div>
+
+                <!-- Tags -->
+                @if (!string.IsNullOrEmpty(Model.Tags))
+                {
+                    <div class="mt-4">
+                        <h6>Tags:</h6>
+                        @foreach (var tag in Model.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            <span class="badge bg-secondary me-1">#@tag.Trim()</span>
+                        }
+                    </div>
+                }
+
+                @* <!-- Share Buttons -->
+                <div class="mt-4 pt-4 border-top">
+                    <h6>Share this post:</h6>
+                    <a href="https://wa.me/?text=@Uri.EscapeDataString(Model.Title + " " + Context.Request.GetDisplayUrl())" target="_blank" class="btn btn-success me-2">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@Uri.EscapeDataString(Context.Request.GetDisplayUrl())" target="_blank" class="btn btn-primary me-2">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?text=@Uri.EscapeDataString(Model.Title)&url=@Uri.EscapeDataString(Context.Request.GetDisplayUrl())" target="_blank" class="btn btn-info">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                </div> *@
+
+                <!-- Back to Blog Button -->
+                <div class="mt-5 pt-4 border-top text-center">
+                    <a href="@Url.Action("Index", "Blog")" class="btn btn-primary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Back to All Posts
+                    </a>
+                </div>
+            </article>
+
+            <!-- Related Posts -->
+            @if (ViewBag.RelatedPosts != null && ((List<BlogPost>)ViewBag.RelatedPosts).Any())
+            {
+                <div class="mt-5">
+                    <h4>Related Posts</h4>
+                    <div class="row">
+                        @foreach (var post in (List<BlogPost>)ViewBag.RelatedPosts)
+                        {
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    @if (!string.IsNullOrEmpty(post.FeaturedImageUrl))
+                                    {
+                                        <img src="@post.FeaturedImageUrl" class="card-img-top" alt="@post.Title" style="height: 150px; object-fit: cover;">
+                                    }
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <a href="@Url.Action("Details", "Blog", new { id = post.Id })" class="text-decoration-none">@post.Title</a>
+                                        </h6>
+                                        <small class="text-muted">@post.CreatedDate.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .blog-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid #007bff;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+</style>

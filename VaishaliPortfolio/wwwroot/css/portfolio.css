@@ -1,0 +1,67 @@
+﻿/* Portfolio specific styles */
+.hover-primary:hover {
+    color: var(--bs-primary) !important;
+}
+
+/* Admin styles */
+.admin-header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Blog styles */
+.blog-card {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+    .blog-card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+/* Form styles */
+.form-floating > label {
+    opacity: 0.65;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    opacity: 1;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+/* Success message styles */
+.alert-success {
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    border-left: 4px solid #dc3545;
+}
+
+/* Loading spinner */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Custom button styles */
+.btn-custom {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+
+    .display-5 {
+        font-size: 1.75rem;
+    }
+}

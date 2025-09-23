@@ -1,0 +1,200 @@
+﻿@model List<BlogPost>
+@{
+    ViewData["Title"] = "Modicare Success Stories & Tips - Vaishali Shah";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Blog Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-primary">📝 Success Stories & Tips</h1>
+                <p class="lead text-muted">Learn from real Modicare success stories and get valuable business tips</p>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <form method="get" class="d-flex">
+                        <input type="text" name="search" value="@ViewBag.SearchTerm" class="form-control me-2" placeholder="Search blog posts...">
+                        <input type="hidden" name="category" value="@ViewBag.Category">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form method="get" class="d-flex">
+                        <select name="category" class="form-select me-2" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            @foreach (var cat in ViewBag.Categories as List<string> ?? new List<string>())
+                            {
+                                <option value="@cat" selected="@(ViewBag.Category == cat)">@cat</option>
+                            }
+                        </select>
+                        <input type="hidden" name="search" value="@ViewBag.SearchTerm">
+                    </form>
+                </div>
+            </div>
+
+            <!-- Blog Posts Only -->
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var post in Model)
+                {
+                    <article class="card mb-4 shadow-sm border-0">
+                        @if (!string.IsNullOrEmpty(post.FeaturedImageUrl))
+                        {
+                            <img src="@post.FeaturedImageUrl" class="card-img-top" alt="@post.Title" style="height: 250px; object-fit: cover;">
+                        }
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted me-3">
+                                        <i class="fas fa-calendar text-primary"></i> @post.CreatedDate.ToString("MMM dd, yyyy")
+                                    </small>
+                                    <small class="text-muted me-3">
+                                        <i class="fas fa-user text-primary"></i> @post.AuthorName
+                                    </small>
+                                    @if (!string.IsNullOrEmpty(post.Category))
+                                    {
+                                        <span class="badge bg-primary">@post.Category</span>
+                                    }
+                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-eye text-primary"></i> @post.ViewCount views
+                                </small>
+                            </div>
+
+                            <h2 class="card-title h4 mb-3">
+                                <a href="@Url.Action("Details", "Blog", new { id = post.Id })" class="text-decoration-none text-dark hover-primary">
+                                    @post.Title
+                                </a>
+                            </h2>
+
+                            @if (!string.IsNullOrEmpty(post.Summary))
+                            {
+                                <p class="card-text text-muted mb-3">@post.Summary</p>
+                            }
+                            else
+                            {
+                                <p class="card-text text-muted mb-3">
+                                    @Html.Raw(post.Content.Length > 200 ? post.Content.Substring(0, 200) + "..." : post.Content)
+                                </p>
+                            }
+
+                            <a href="@Url.Action("Details", "Blog", new { id = post.Id })" class="btn btn-primary">
+                                Read Full Story <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                }
+
+                <!-- Pagination -->
+                @if (ViewBag.TotalPages > 1)
+                {
+                    <nav aria-label="Blog pagination" class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            @if (ViewBag.HasPreviousPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1, search = ViewBag.SearchTerm, category = ViewBag.Category })">
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = i, search = ViewBag.SearchTerm, category = ViewBag.Category })">@i</a>
+                                </li>
+                            }
+
+                            @if (ViewBag.HasNextPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1, search = ViewBag.SearchTerm, category = ViewBag.Category })">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-blog text-muted" style="font-size: 4rem;"></i>
+                    </div>
+                    <h3 class="h4 text-muted mb-3">No blog posts found</h3>
+                    <p class="text-muted mb-4">
+                        @(string.IsNullOrEmpty(ViewBag.SearchTerm) ?
+                                            "Check back soon for inspiring Modicare success stories!" :
+                                            "Try a different search term or browse all categories.")
+                </p>
+                @if (!string.IsNullOrEmpty(ViewBag.SearchTerm) || !string.IsNullOrEmpty(ViewBag.Category))
+                    {
+                        <a href="@Url.Action("Index")" class="btn btn-primary">
+                            <i class="fas fa-list"></i> View All Posts
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Minimal Sidebar for Blog Page -->
+        <div class="col-lg-4">
+            <!-- Back to Home -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-home"></i> Vaishali Shah</h5>
+                </div>
+                <div class="card-body text-center">
+                    <p class="small text-muted mb-3">Want to connect with Vaishali?</p>
+                    <div class="d-grid gap-2">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-user"></i> View Profile
+                        </a>
+                        <a href="tel:8758274909" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                        <a href="https://wa.me/918758274909" target="_blank" class="btn btn-outline-success btn-sm">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            @if (ViewBag.Categories != null && ((List<string>)ViewBag.Categories).Any())
+            {
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-tags"></i> Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="@Url.Action("Index")" class="badge bg-secondary text-decoration-none">All Posts</a>
+                            @foreach (var category in (List<string>)ViewBag.Categories)
+                            {
+                                <a href="@Url.Action("Index", new { category = category })"
+                                   class="badge @(ViewBag.Category == category ? "bg-primary" : "bg-light text-dark") text-decoration-none">
+                                    @category
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-primary:hover {
+        color: var(--bs-primary) !important;
+    }
+</style>

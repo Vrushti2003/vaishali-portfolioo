@@ -1,8 +1,623 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ContactInquiry
+@{
+    ViewData["Title"] = "Vaishali Shah - Modicare Consultant Bhuj | Earn from Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="row align-items-center min-vh-75">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <div class="profile-image-container mb-4">
+                            <img src="~/vaishali.jpg" alt="Vaishali Shah" class="profile-image">
+                            <div class="profile-badge">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <h1 class="hero-title">Vaishali Shah</h1>
+                        <p class="hero-subtitle">Senior Executive Director</p>
+                        <p class="hero-company">Modicare India</p>
+                        <p class="hero-description">
+                            Transform your life with proven strategies and mentorship.
+                            Join thousands who have achieved financial freedom through Modicare.
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">1000+</div>
+                                <div class="stat-label">Network Members</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Entrepreneurs Mentored</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">200+</div>
+                                <div class="stat-label">Loyal Customers</div>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <a href="tel:8758274909" class="btn btn-primary btn-elegant">
+                                <i class="fas fa-phone"></i> Call Now
+                            </a>
+                            <a href="https://wa.me/918758274909" target="_blank" class="btn btn-success btn-elegant">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-form-elegant">
+                        <div class="form-header">
+                            <h3>Start Your Journey</h3>
+                            <p>Ready to transform your life? Let's connect!</p>
+                        </div>
+
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-elegant">
+                                <i class="fas fa-check-circle"></i>
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+
+                        <form method="post" asp-action="Index" class="elegant-form">
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group-elegant">
+                                <input asp-for="Name" type="text" class="form-control-elegant" required>
+                                <label asp-for="Name" class="form-label-elegant">Your Name</label>
+                                <span asp-validation-for="Name" class="error-message"></span>
+                            </div>
+
+                            <div class="form-group-elegant">
+                                <input asp-for="PhoneNumber" type="tel" class="form-control-elegant" required>
+                                <label asp-for="PhoneNumber" class="form-label-elegant">Phone Number</label>
+                                <span asp-validation-for="PhoneNumber" class="error-message"></span>
+                            </div>
+
+                            <div class="form-group-elegant">
+                                <textarea asp-for="Message" class="form-control-elegant" rows="4" required></textarea>
+                                <label asp-for="Message" class="form-label-elegant">Your Message</label>
+                                <span asp-validation-for="Message" class="error-message"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-submit-elegant">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Why Choose Modicare with Vaishali?</h2>
+            <p>Experience the difference of expert mentorship and proven success strategies</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h4>International Recognition</h4>
+                    <p>Earned luxury trips to Dubai, Thailand & Pattaya through outstanding performance</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Strong Network</h4>
+                    <p>Built a network of 1000+ active members across India with proven strategies</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Expert Mentorship</h4>
+                    <p>Mentored 100+ entrepreneurs to start their successful Modicare journey</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Story Section -->
+<section class="story-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="story-content">
+                    <h2>From Homemaker to Success</h2>
+                    <p class="story-text">
+                        Vaishali Shah's transformation from a homemaker to a top Modicare entrepreneur
+                        proves the power of passion and proper mentorship. Her journey demonstrates
+                        how anyone can achieve financial independence with the right guidance.
+                    </p>
+                    <div class="story-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Step-by-step mentorship program</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Proven business strategies</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Continuous support and guidance</span>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Index", "Blog")" class="btn btn-primary btn-elegant">
+                        <i class="fas fa-book"></i> Read Success Stories
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="story-visual">
+                    <div class="achievement-cards">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">🏆</div>
+                            <div class="achievement-text">Senior Executive Director</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">✈️</div>
+                            <div class="achievement-text">International Trips</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">🌟</div>
+                            <div class="achievement-text">Top Performer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="contact-info-section">
+    <div class="container">
+        <div class="contact-info-card">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h3>Get in Touch</h3>
+                    <p>Ready to start your Modicare journey? Contact Vaishali Shah today for personalized guidance.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 87582 74909</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bhuj, Gujarat, India</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <a href="https://shop.modicare.com/92701402" target="_blank" class="btn btn-warning btn-elegant">
+                        <i class="fas fa-shopping-cart"></i> Shop Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-overlay {
+        background: rgba(0, 0, 0, 0.1);
+        padding: 80px 0;
+    }
+
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+
+    .profile-image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        object-fit: cover;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #ffd700;
+        color: #333;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 0.25rem;
+    }
+
+    .hero-company {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-description {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ffd700;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 0.25rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    /* Contact Form */
+    .contact-form-elegant {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+        .form-header h3 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+    .form-group-elegant {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control-elegant {
+        width: 100%;
+        padding: 1rem 1rem 0.5rem;
+        border: 2px solid #e1e8ed;
+        border-radius: 12px;
+        font-size: 1rem;
+        background: transparent;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+        .form-control-elegant:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+    .form-label-elegant {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+        color: #999;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background: white;
+        padding: 0 0.25rem;
+    }
+
+    .form-control-elegant:focus + .form-label-elegant,
+    .form-control-elegant:not(:placeholder-shown) + .form-label-elegant {
+        top: 0;
+        transform: translateY(-50%);
+        font-size: 0.85rem;
+        color: #667eea;
+    }
+
+    .btn-submit-elegant {
+        width: 100%;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .btn-submit-elegant:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+    /* Button Styles */
+    .btn-elegant {
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .btn-elegant:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Features Section */
+    .features-section {
+        padding: 80px 0;
+        background: #f8fafc;
+    }
+
+    .section-header {
+        margin-bottom: 4rem;
+    }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+    .feature-card {
+        background: white;
+        padding: 2.5rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+    }
+
+    .feature-card h4 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    /* Story Section */
+    .story-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .story-content h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+
+    .story-text {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+    }
+
+    .story-highlights {
+        margin-bottom: 2rem;
+    }
+
+    .highlight-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+        .highlight-item i {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+    .story-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .achievement-cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 300px;
+    }
+
+    .achievement-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .achievement-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .achievement-text {
+        font-weight: 600;
+    }
+
+    /* Contact Info Section */
+    .contact-info-section {
+        padding: 60px 0;
+        background: #f8fafc;
+    }
+
+    .contact-info-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+        .contact-info-card h3 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+    .contact-details {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #666;
+    }
+
+        .contact-item i {
+            color: #667eea;
+        }
+
+    .alert-elegant {
+        border: none;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+   
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

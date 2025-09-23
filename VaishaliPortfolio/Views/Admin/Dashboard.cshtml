@@ -1,0 +1,158 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard - Vaishali Shah Portfolio";
+}
+
+<div class="container py-5">
+    <h1 class="display-5 mb-4">📊 Admin Dashboard</h1>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@ViewBag.TotalPosts</h4>
+                            <p class="mb-0">Total Posts</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-file-alt fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@ViewBag.PublishedPosts</h4>
+                            <p class="mb-0">Published</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@ViewBag.TotalViews</h4>
+                            <p class="mb-0">Total Views</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-eye fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@ViewBag.TotalContacts</h4>
+                            <p class="mb-0">Contact Inquiries</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-bolt"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Action("CreateBlog", "Admin")" class="btn btn-primary me-2">
+                        <i class="fas fa-plus"></i> Create New Post
+                    </a>
+                    <a href="@Url.Action("Blog", "Admin")" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-list"></i> Manage Posts
+                    </a>
+                    <a href="@Url.Action("Index", "Blog")" class="btn btn-outline-success" target="_blank">
+                        <i class="fas fa-eye"></i> View Public Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Posts and Contacts -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-file-alt"></i> Recent Blog Posts</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.RecentPosts != null && ((List<BlogPost>)ViewBag.RecentPosts).Any())
+                    {
+                        @foreach (var post in (List<BlogPost>)ViewBag.RecentPosts)
+                        {
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                                <div>
+                                    <h6 class="mb-1">@post.Title</h6>
+                                    <small class="text-muted">@post.CreatedDate.ToString("MMM dd, yyyy") • @post.ViewCount views</small>
+                                </div>
+                                <div>
+                                    @if (post.IsPublished)
+                                    {
+                                        <span class="badge bg-success">Published</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning">Draft</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">No recent posts.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-envelope"></i> Recent Contact Inquiries</h5>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.RecentContacts != null && ((List<ContactInquiry>)ViewBag.RecentContacts).Any())
+                    {
+                        @foreach (var contact in (List<ContactInquiry>)ViewBag.RecentContacts)
+                        {
+                            <div class="border-bottom py-2">
+                                <h6 class="mb-1">@contact.Name</h6>
+                                <p class="mb-1 small">@contact.PhoneNumber</p>
+                                <p class="mb-1 small text-muted">@(contact.Message.Length > 50 ? contact.Message.Substring(0, 50) + "..." : contact.Message)</p>
+                                <small class="text-muted">@contact.CreatedDate.ToString("MMM dd, yyyy")</small>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">No recent inquiries.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
